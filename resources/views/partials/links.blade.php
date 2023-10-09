@@ -1,9 +1,9 @@
 <li><a href="/">Home</a></li>
 <li tabindex="0">
     <details>
-        <summary>Parent</summary>
-        <ul class="p-2">
-            <li><a>Submenu 1</a></li>
+        <summary>Admin</summary>
+        <ul class="p-2 z-20 bg-base-100">
+            <li><a href="{{route('articles.index')}}">Articles</a></li>
             <li><a>Submenu 2</a></li>
         </ul>
     </details>
