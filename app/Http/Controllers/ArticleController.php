@@ -13,7 +13,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::simplepaginate();
+        $articles = Article::latest()->paginate();
         return view('articles.index', compact('articles'));
     }
 
@@ -22,7 +22,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return view('articles.create');
     }
 
     /**
@@ -30,7 +30,9 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
-        //
+        $article = new Article($request->validated());
+        $article->save();
+        return redirect(route('articles.index'));
     }
 
     /**
@@ -38,7 +40,9 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        $id = $_GET['id'];
+        $article = Article::find($id);
+        return view('articles.view', compact('article'));
     }
 
     /**
@@ -46,7 +50,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return view('articles.edit', compact('article'));
     }
 
     /**
@@ -54,14 +58,19 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        //
+        $article->title = $_POST['title'];
+        $article->body = $_POST['body'];
+        $article->save();
+        return redirect(route('articles.index'));
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Article $article)
     {
-        //
+        $id = $_GET['id'];
+        $article = Article::find($id);
+        $article->delete();
+        return redirect(route('articles.index'));
     }
 }
