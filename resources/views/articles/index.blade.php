@@ -4,7 +4,8 @@
 
     <div class="container mx-auto">
         <a class="btn btn-primary" href="{{route('articles.create')}}">New Article</a>
-        {{$articles->links()}}
+        <a class="btn btn-secondary" href="{{route('articles.deleted')}}">Articles deleted</a>
+        {{$articles-> links()}}
         <table class="table">
             <thead>
                 <th>Id</th>
@@ -22,9 +23,13 @@
                         <td>{{$article->updated_at}}</td>
                         <td>
                             <div class="join">
-                                <a href="{{route('articles.view')}}?id={{$article->id}}" class="btn btn-info join-item">View</a>
+                                <a href="{{route('articles.show', ['article' => $article])}}" class="btn btn-info join-item">View</a>
                                 <a href="{{route('articles.edit', ['article' => $article])}}" class="btn btn-warning join-item">Edit</a>
-                                <a href="{{route('articles.delete')}}?id={{$article->id}}" class="btn btn-error join-item">Delete</a>
+                                <form action="{{route('articles.destroy', [$article->id])}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="submit" class="btn btn-error join-item" value="Delete">
+                                </form>
                             </div>
                         </td>
                     </tr>

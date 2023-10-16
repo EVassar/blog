@@ -13,7 +13,15 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::latest()->paginate();
+        $articles = Article::latest()->simplepaginate(12);
+        return view('articles.index', compact('articles'));
+    }
+    /**
+     * Display a listing of the deletaed resource.
+     */
+    public function deleted()
+    {
+        $articles = Article::onlyTrashed()->orderBy('deleted_at')->simplepaginate();
         return view('articles.index', compact('articles'));
     }
 
@@ -30,6 +38,7 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
+        dd($request->file('image')->store('/public'););
         $article = new Article($request->validated());
         $article->save();
         return redirect(route('articles.index'));
@@ -40,8 +49,6 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        $id = $_GET['id'];
-        $article = Article::find($id);
         return view('articles.view', compact('article'));
     }
 
@@ -58,8 +65,9 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        $article->title = $_POST['title'];
-        $article->body = $_POST['body'];
+        //$article->title = $request->validated('title');
+        //$article->body = $request->validated('body');
+        $article->fill($request->validated());
         $article->save();
         return redirect(route('articles.index'));
     }
@@ -68,8 +76,6 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        $id = $_GET['id'];
-        $article = Article::find($id);
         $article->delete();
         return redirect(route('articles.index'));
     }

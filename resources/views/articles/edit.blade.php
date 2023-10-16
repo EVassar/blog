@@ -5,6 +5,7 @@
             <div class="card-body">
                 <form action="{{route('articles.update', ['article' => $article])}}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="form-control w-full">
                         <label class="label">
                             <span class="label-text">Title</span>
@@ -17,7 +18,7 @@
                             <span class="label-text">Content</span>
                         </label>
                         <textarea class="textarea textarea-primary  resize-y" value="{{$article->body}}" name="body"
-                                  id="body"></textarea>
+                                  id="body">{{$article->body}}</textarea>
                     </div>
                     <input class="btn btn-outline btn-primary" type="submit"></input>
                 </form>

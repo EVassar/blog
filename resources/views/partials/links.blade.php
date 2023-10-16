@@ -1,4 +1,5 @@
 <li><a href="/">Home</a></li>
+@auth
 <li tabindex="0">
     <details>
         <summary>Admin</summary>
@@ -8,4 +9,5 @@
         </ul>
     </details>
 </li>
+@endauth
 <li><a href="/about">About</a></li>
